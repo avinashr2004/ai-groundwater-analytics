@@ -1,0 +1,69 @@
+/* Ensure the body and html take up the full viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Helps with consistent spacing/padding */
+}
+
+/* Main dashboard container to take full width and height */
+.dashboard {
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* For stats to be evenly distributed across the screen width */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0; /* Reduced the margin here */
+    flex-grow: 1; /* Allow it to grow and take available space */
+    flex-wrap: wrap; /* Wrap the stats if necessary */
+}
+
+/* Maps section for full-width layout and responsiveness */
+.maps {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0; /* Reduced the margin here */
+    flex-grow: 1; /* Allows it to grow and take available space */
+}
+
+.map {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.zone-list, .alerts-table {
+    width: 100%;
+}
+
+.dropdown-icon {
+    background-color: rgb(69, 152, 240);
+    color: white;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+/* Optional: Add responsiveness */
+@media (max-width: 768px) {
+    .stats {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .maps {
+        flex-direction: column;
+        align-items: center;
+    }
+}

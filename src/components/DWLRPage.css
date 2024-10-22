@@ -1,0 +1,83 @@
+.dwlr-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .zones-section, .zone-details-section {
+    width: 48%;
+  }
+  
+  .zones-header, .zone-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3498db; /* Set the header background */
+    color: white; /* Set the text color to white for contrast */
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .zones-list, .zone-details-list {
+    margin-top: 10px;
+  }
+  
+  .zones-list-header, .zone-details-list-header, .zone-item, .detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .zones-list-header span, .zone-details-list-header span {
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
+  }
+  
+  .zone-item span, .detail-item span {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .search-bar {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .alert-type {
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  .alert-type.water-abnormality {
+    background-color: lightblue;
+    color: darkblue;
+  }
+  
+  .alert-type.low-battery-level {
+    background-color: lightcoral;
+    color: darkred;
+  }
+  
+  .alert-type.abnormal-data {
+    background-color: lightgreen;
+    color: darkgreen;
+  }
+  
+  .alert-type.core {
+    background-color: rgb(240, 240, 102);
+    color: darkgoldenrod;
+  }
+  
+  .alert-type.elective {
+    background-color: lightgrey;
+    color: darkslategray;
+  }
+  
+  .zone-item .dwlr-count {
+    color: red; /* Set DWLR count to red */
+  }
+  

@@ -1,0 +1,39 @@
+.stats-card {
+    border: 2px solid transparent; /* Border color will be dynamic */
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card:hover {
+    transform: scale(1.05);
+}
+
+.stats-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: black;
+}
+
+.stats-card p {
+    margin: 10px 0 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.circular-number {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 50%;
+    background-color: white;
+    color: inherit;
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid currentColor;
+}
