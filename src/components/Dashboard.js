@@ -17,7 +17,7 @@ const Dashboard = () => {
     const stats = [
         { title: 'No of DWLRs', count: 4052, color: '#3498db', navigateTo: '/dwlr' }, // Add navigateTo here
         { title: 'Alarms Raised', count: 220, color: '#e74c3c', navigateTo: '/alarms' },
-        { title: 'Vendors', count: 400, color: '#2ecc71' },
+        { title: 'Vendors', count: 400, color: '#2ecc71', navigateTo: '/vendors' },
         { title: 'Officers', count: 52, color: '#8e44ad' },
     ];
 
