@@ -1,0 +1,42 @@
+.settings-page {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info h2 {
+    margin: 0;
+}
+
+.account-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.account-list li {
+    padding: 8px 0;
+}
+
+.logout-button {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
