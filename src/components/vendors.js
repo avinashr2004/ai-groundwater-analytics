@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Table, Button, Form, InputGroup, FormControl, Modal } from 'react-bootstrap';
+import { Table, Button, Form, Modal } from 'react-bootstrap';
+import Header from './Header1'; // Import your header component
+import './ManageVendors.css'; // Import the CSS file
 
 const ManageVendors = () => {
-  // Dummy data for the table
   const [vendors, setVendors] = useState([
     {
       vendorId: '21001',
@@ -13,14 +14,101 @@ const ManageVendors = () => {
       username: 'Aimee000',
       lastLoggedIn: '2021-05-29',
     },
-    // Add more vendor objects here...
+    {
+      vendorId: '21002',
+      name: 'John Doe',
+      location: 'New York',
+      email: 'john@example.com',
+      contact: '1234567890',
+      username: 'johndoe',
+      lastLoggedIn: '2021-06-01',
+    },
+    {
+      vendorId: '21003',
+      name: 'Jane Smith',
+      location: 'Los Angeles',
+      email: 'jane@example.com',
+      contact: '0987654321',
+      username: 'janesmith',
+      lastLoggedIn: '2021-06-05',
+    },
+    {
+      vendorId: '21004',
+      name: 'Mike Johnson',
+      location: 'Chicago',
+      email: 'mike@example.com',
+      contact: '5555555555',
+      username: 'mikej',
+      lastLoggedIn: '2021-06-10',
+    },
+    {
+      vendorId: '21005',
+      name: 'Emily Davis',
+      location: 'Miami',
+      email: 'emily@example.com',
+      contact: '4444444444',
+      username: 'emilyd',
+      lastLoggedIn: '2021-06-15',
+    },
+    {
+      vendorId: '21006',
+      name: 'Michael Brown',
+      location: 'Houston',
+      email: 'michael@example.com',
+      contact: '3333333333',
+      username: 'michaelb',
+      lastLoggedIn: '2021-06-20',
+    },
+    {
+      vendorId: '21007',
+      name: 'Sarah Wilson',
+      location: 'Phoenix',
+      email: 'sarah@example.com',
+      contact: '2222222222',
+      username: 'sarahw',
+      lastLoggedIn: '2021-06-25',
+    },
+    {
+      vendorId: '21008',
+      name: 'David Miller',
+      location: 'Dallas',
+      email: 'david@example.com',
+      contact: '1111111111',
+      username: 'davidm',
+      lastLoggedIn: '2021-06-30',
+    },
+    {
+      vendorId: '21009',
+      name: 'Laura Garcia',
+      location: 'San Francisco',
+      email: 'laura@example.com',
+      contact: '6666666666',
+      username: 'laurag',
+      lastLoggedIn: '2021-07-05',
+    },
+    {
+      vendorId: '21010',
+      name: 'Daniel Martinez',
+      location: 'Seattle',
+      email: 'daniel@example.com',
+      contact: '7777777777',
+      username: 'danielm',
+      lastLoggedIn: '2021-07-10',
+    },
+    // Duplicating for a total of 60 entries with variations
+    ...Array.from({ length: 60 }, (_, index) => ({
+      vendorId: `210${index + 11}`,
+      name: `Vendor ${index + 11}`,
+      location: `Location ${index + 11}`,
+      email: `vendor${index + 11}@example.com`,
+      contact: `555-000-${String(index + 1000).slice(-4)}`,
+      username: `vendor${index + 11}`,
+      lastLoggedIn: `2021-07-${String((index % 30) + 1).padStart(2, '0')}`,
+    })),
   ]);
 
-  // Modal state for adding and editing
   const [showModal, setShowModal] = useState(false);
-  const [isEditing, setIsEditing] = useState(false); // Determines if we're editing an existing vendor
-
-  // New vendor data (or edited data)
+  const [isEditing, setIsEditing] = useState(false);
   const [newVendor, setNewVendor] = useState({
     vendorId: '',
     name: '',
@@ -31,12 +119,11 @@ const ManageVendors = () => {
     lastLoggedIn: '',
   });
 
-  const [editIndex, setEditIndex] = useState(null); // Tracks which vendor is being edited
+  const [editIndex, setEditIndex] = useState(null);
 
-  // Handle modal open/close
   const handleCloseModal = () => {
     setShowModal(false);
-    setIsEditing(false); // Reset to adding mode
+    setIsEditing(false);
     setNewVendor({
       vendorId: '',
       name: '',
@@ -50,197 +137,136 @@ const ManageVendors = () => {
 
   const handleShowModal = () => setShowModal(true);
 
-  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewVendor({ ...newVendor, [name]: value });
   };
 
-  // Handle vendor addition or editing
   const handleAddOrEditVendor = () => {
     if (isEditing) {
-      // Update the vendor at the editIndex
       const updatedVendors = [...vendors];
       updatedVendors[editIndex] = newVendor;
       setVendors(updatedVendors);
     } else {
-      // Add new vendor
       setVendors([...vendors, newVendor]);
     }
-
-    // Reset form and close modal
     handleCloseModal();
   };
 
-  // Handle delete vendor
-  const handleDeleteVendor = (index) => {
-    const updatedVendors = vendors.filter((_, i) => i !== index);
-    setVendors(updatedVendors);
-  };
-
-  // Handle edit vendor (open modal with pre-filled data)
-  const handleEditVendor = (index) => {
-    setIsEditing(true); // Switch to editing mode
-    setEditIndex(index); // Track which vendor is being edited
-    setNewVendor(vendors[index]); // Pre-fill modal with vendor data
-    handleShowModal();
-  };
-
   return (
-    <div className="container">
-      {/* Header Section */}
-      <div className="d-flex justify-content-between align-items-center my-4">
-        <h1>Manage Vendors</h1>
-        <Button variant="primary" onClick={handleShowModal}>Add Vendor</Button>
+    <div>
+      <Header />
+      <div className="vendors-container">
+        <h3>Manage Vendors</h3>
+        <Button variant="primary" onClick={handleShowModal}>
+          Add Vendor
+        </Button>
+        <div className="table-responsive">
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Vendor ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Username</th>
+                <th>Last Logged In</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vendors.map((vendor, index) => (
+                <tr key={index}>
+                  <td>{vendor.vendorId}</td>
+                  <td>{vendor.name}</td>
+                  <td>{vendor.location}</td>
+                  <td>{vendor.email}</td>
+                  <td>{vendor.contact}</td>
+                  <td>{vendor.username}</td>
+                  <td>{vendor.lastLoggedIn}</td>
+                  <td>
+                    <Button variant="warning" onClick={() => { /* Edit vendor logic */ }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" onClick={() => { /* Delete vendor logic */ }}>
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
       </div>
 
-      {/* Filter Inputs */}
-      <div className="mb-3">
-        <InputGroup className="mb-2">
-          <Form.Select>
-            <option>Select Location</option>
-            {/* Add locations here */}
-          </Form.Select>
-
-          <Form.Select>
-            <option>Select Name</option>
-            {/* Add vendor names here */}
-          </Form.Select>
-
-          <Form.Select>
-            <option>Select Contact Deadline</option>
-            {/* Add deadline options */}
-          </Form.Select>
-
-          <Form.Select>
-            <option>Select by Most Active</option>
-            {/* Add activity filter */}
-          </Form.Select>
-        </InputGroup>
-        {/* Additional Filters */}
-        <InputGroup>
-          <FormControl placeholder="Vendor ID" />
-          <FormControl placeholder="Vendor Name" />
-          <FormControl placeholder="Location" />
-          <FormControl placeholder="Vendor Email" />
-          <FormControl placeholder="Vendor Contact" />
-        </InputGroup>
-      </div>
-
-      {/* Vendor Table */}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Profile</th>
-            <th>Vendor Name</th>
-            <th>Location</th>
-            <th>Vendor ID</th>
-            <th>Vendor Email</th>
-            <th>Vendor Contact</th>
-            <th>Username</th>
-            <th>Last Logged-in</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vendors.map((vendor, index) => (
-            <tr key={index}>
-              <td><a href="#">Profile</a></td>
-              <td>{vendor.name}</td>
-              <td>{vendor.location}</td>
-              <td>{vendor.vendorId}</td>
-              <td>{vendor.email}</td>
-              <td>{vendor.contact}</td>
-              <td>{vendor.username}</td>
-              <td>{vendor.lastLoggedIn}</td>
-              <td>
-                <Button variant="info" className="me-2" onClick={() => handleEditVendor(index)}>Edit</Button>
-                <Button variant="danger" onClick={() => handleDeleteVendor(index)}>Delete</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      {/* Pagination (optional, if data grows) */}
-      <div className="d-flex justify-content-between">
-        <span>Showing 1 to {vendors.length} of {vendors.length} entries</span>
-        <nav>
-          <ul className="pagination">
-            <li className="page-item"><Button variant="link">1</Button></li>
-            {/* Add pagination links */}
-          </ul>
-        </nav>
-      </div>
-
-      {/* Modal for Adding/Editing Vendor */}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>{isEditing ? 'Edit Vendor' : 'Add Vendor'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="formVendorName">
-              <Form.Label>Vendor Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={newVendor.name}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formLocation">
-              <Form.Label>Location</Form.Label>
-              <Form.Control
-                type="text"
-                name="location"
-                value={newVendor.location}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formVendorId">
+            <Form.Group controlId="formVendorId">
               <Form.Label>Vendor ID</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter Vendor ID"
                 name="vendorId"
                 value={newVendor.vendorId}
                 onChange={handleInputChange}
               />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formVendorEmail">
-              <Form.Label>Vendor Email</Form.Label>
+            <Form.Group controlId="formName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter name"
+                name="name"
+                value={newVendor.name}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formLocation">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter location"
+                name="location"
+                value={newVendor.location}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
+                placeholder="Enter email"
                 name="email"
                 value={newVendor.email}
                 onChange={handleInputChange}
               />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formVendorContact">
-              <Form.Label>Vendor Contact</Form.Label>
+            <Form.Group controlId="formContact">
+              <Form.Label>Contact</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter contact"
                 name="contact"
                 value={newVendor.contact}
                 onChange={handleInputChange}
               />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formUsername">
+            <Form.Group controlId="formUsername">
               <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
+                placeholder="Enter username"
                 name="username"
                 value={newVendor.username}
                 onChange={handleInputChange}
               />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formLastLoggedIn">
+            <Form.Group controlId="formLastLoggedIn">
               <Form.Label>Last Logged In</Form.Label>
               <Form.Control
                 type="date"
@@ -256,7 +282,7 @@ const ManageVendors = () => {
             Close
           </Button>
           <Button variant="primary" onClick={handleAddOrEditVendor}>
-            {isEditing ? 'Save Changes' : 'Add Vendor'}
+            {isEditing ? 'Update Vendor' : 'Add Vendor'}
           </Button>
         </Modal.Footer>
       </Modal>

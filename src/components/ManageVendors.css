@@ -1,0 +1,40 @@
+.vendors-container {
+    margin: 20px;
+  }
+  
+  h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    text-align: center; /* Center align text in table cells */
+  }
+  
+  .btn {
+    margin-right: 10px; /* Space out buttons in the table */
+  }
+  
+  .modal-body {
+    padding: 20px; /* Add padding to modal body */
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: space-between; /* Space out modal footer buttons */
+  }
+  .vendors-container {
+    padding: 20px;
+  }
+  
+  .table-responsive {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrolling */
+    margin-top: 20px; /* Spacing above the table */
+  }
+  
