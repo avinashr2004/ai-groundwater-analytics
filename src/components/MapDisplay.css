@@ -1,16 +1,25 @@
 .map-display {
-    width: 48%;
+    width: 48%; /* Ensures the map takes up almost half of the available space */
     padding: 15px;
     background-color: white;
     border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow for better aesthetics */
+    margin: 10px; /* Adds some space between map displays */
 }
 
 .map-placeholder {
-    height: 300px;
+    height: 500px; /* Fixed height, can be adjusted */
     background-color: #e0e0e0;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 5px;
     margin-top: 10px;
+    overflow: hidden; /* Ensures the image fits well within the container */
+}
+
+.map-placeholder img {
+    width: 50%;  /* Makes sure the image stretches to fill the container */
+    height: auto; /* Maintains the aspect ratio */
+    object-fit: contain; /* Ensures the image is contained within the box without distortion */
 }
