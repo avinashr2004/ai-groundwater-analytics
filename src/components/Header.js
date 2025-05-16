@@ -161,10 +161,10 @@ const Header = () => {
                 </div>
 
                 <div style={styles.menuBar}>
-                    <div style={styles.menuOptions}>
+                    {/* <div style={styles.menuOptions}>
                         <a href="/administration" style={styles.menuItem}>Administration</a>
                         <a href="/accounts" style={styles.menuItem}>Accounts</a>
-                    </div>
+                    </div> */}
 
                     <div style={styles.settingsOption}>
                         <a href="/settings" style={styles.menuItem}>
