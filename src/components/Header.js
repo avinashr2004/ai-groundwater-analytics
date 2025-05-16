@@ -1,6 +1,101 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import './Header.css';
+
+const styles = {
+  header: {
+    width: '100%',
+    backgroundColor: '#fff',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+  },
+  headerContent: {
+    padding: '1rem 2rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottom: '1px solid #e5e7eb',
+  },
+  logoSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+  },
+  siteLogo: {
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    color: 'inherit',
+    gap: '1rem',
+  },
+  logoImage: {
+    height: '60px',
+    width: 'auto',
+  },
+  logoText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.25rem',
+  },
+  hindiTitle: {
+    color: '#1e3c72',
+    fontSize: '1.25rem',
+    fontWeight: '600',
+    margin: 0,
+  },
+  englishTitle: {
+    color: '#2a5298',
+    fontSize: '1rem',
+    fontWeight: '500',
+    margin: 0,
+    maxWidth: '400px',
+    lineHeight: '1.4',
+  },
+  subtitle: {
+    color: '#4b5563',
+    fontSize: '0.875rem',
+    margin: '0.25rem 0 0 0',
+  },
+  additionalLogos: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1.5rem',
+  },
+  additionalLogo: {
+    height: '50px',
+    width: 'auto',
+  },
+  menuBar: {
+    padding: '0.75rem 2rem',
+    background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  menuOptions: {
+    display: 'flex',
+    gap: '1rem',
+  },
+  menuItem: {
+    color: 'white',
+    padding: '0.5rem 1rem',
+    borderRadius: '6px',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    background: 'transparent',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    fontSize: '0.875rem',
+    fontWeight: '500',
+    transition: 'all 0.2s',
+    textDecoration: 'none',
+  },
+  settingsOption: {
+    marginLeft: 'auto',
+  },
+  settingsIcon: {
+    fontSize: '1.25rem',
+  }
+};
 
 const Header = () => {
     return (
@@ -12,34 +107,34 @@ const Header = () => {
                 />
             </Helmet>
 
-            <header className="header">
-                <div className="header-content">
-                    <div className="logo-section">
+            <header style={styles.header}>
+                <div style={styles.headerContent}>
+                    <div style={styles.logoSection}>
                         <a
                             title="Go to home"
-                            className="site-logo"
+                            style={styles.siteLogo}
                             rel="home"
                         >
                             <img
                                 src="https://jalshakti-dowr.gov.in/wp-content/themes/sdo-theme/images/emblem.svg"
                                 alt="State Emblem of India"
-                                className="logo-image"
+                                style={styles.logoImage}
                             />
-                            <div className="logo-text">
-                                <strong lang="hi">
+                            <div style={styles.logoText}>
+                                <strong lang="hi" style={styles.hindiTitle}>
                                     जलसंसाधन, नदी विकास और गंगा संरक्षण विभाग
                                 </strong>
-                                <h1 className="title">
+                                <h1 style={styles.englishTitle}>
                                     Department of Water Resources, River Development and Ganga Rejuvenation
                                 </h1>
-                                <p>सत्यमेव जयते</p>
+                                <p style={styles.subtitle}>सत्यमेव जयते</p>
                             </div>
                         </a>
                     </div>
 
-                    <div className="additional-logos">
+                    <div style={styles.additionalLogos}>
                         <a
-                            aria-label="State Logo - External site that opens in a new window"
+                            aria-label="State Logo"
                             target="_blank"
                             rel="noopener noreferrer"
                             title="State Logo"
@@ -47,11 +142,11 @@ const Header = () => {
                             <img
                                 src="https://cdnbbsr.s3waas.gov.in/s3a70dc40477bc2adceef4d2c90f47eb82/uploads/2023/01/2023010925-e1673257612984.png"
                                 alt="G20 Logo"
-                                className="additional-logo"
+                                style={styles.additionalLogo}
                             />
                         </a>
                         <a
-                            aria-label="Azadi ka Amrit Mahotsav - External site that opens in a new window"
+                            aria-label="Azadi ka Amrit Mahotsav"
                             target="_blank"
                             rel="noopener noreferrer"
                             title="Azadi ka Amrit Mahotsav"
@@ -59,23 +154,21 @@ const Header = () => {
                             <img
                                 src="https://cdnbbsr.s3waas.gov.in/s3a70dc40477bc2adceef4d2c90f47eb82/uploads/2023/01/2023010958.png"
                                 alt="Azadi Ka Amrit Mahotsav Logo"
-                                className="additional-logo"
+                                style={styles.additionalLogo}
                             />
                         </a>
                     </div>
                 </div>
 
-                {/* New section for the menu options */}
-                <div className="menu-bar">
-                    <div className="menu-options">
-                        <a href="/administration" className="menu-item">Administration</a>
-                        <a href="/accounts" className="menu-item">Accounts</a>
-                    </div>
+                <div style={styles.menuBar}>
+                    {/* <div style={styles.menuOptions}>
+                        <a href="/administration" style={styles.menuItem}>Administration</a>
+                        <a href="/accounts" style={styles.menuItem}>Accounts</a>
+                    </div> */}
 
-                    {/* Settings option aligned to the right */}
-                    <div className="settings-option">
-                        <a href="/settings" className="menu-item settings">
-                            <span className="material-symbols-outlined settings-icon">
+                    <div style={styles.settingsOption}>
+                        <a href="/settings" style={styles.menuItem}>
+                            <span className="material-symbols-outlined" style={styles.settingsIcon}>
                                 settings
                             </span>
                             Settings

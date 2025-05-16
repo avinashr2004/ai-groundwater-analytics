@@ -11,6 +11,8 @@ function Alerts() {
     { id: '2047', date: '27-09-2024 02:34:08 pm', vendor: '134id', type: 'Elective' },
   ];
 
+  
+
   return (
     <div className="alerts-container">
       <div className="zones-section">
