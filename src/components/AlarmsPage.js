@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './Header1';
 import { FiSearch } from 'react-icons/fi';
-
+//ok
 const styles = {
   alertsContainer: {
     padding: '2rem',
