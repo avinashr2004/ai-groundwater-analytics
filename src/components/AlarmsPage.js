@@ -93,13 +93,13 @@ function Alerts() {
   const [searchAlert, setSearchAlert] = useState('');
 
   const zones = [
-    { name: 'Chennai', alertCount: 12, dwlrCount: 45 },
-    { name: 'Delhi', alertCount: 8, dwlrCount: 38 },
-    { name: 'Mumbai', alertCount: 15, dwlrCount: 52 },
-    { name: 'Kolkata', alertCount: 6, dwlrCount: 31 },
-    { name: 'Bangalore', alertCount: 9, dwlrCount: 43 },
-    { name: 'Hyderabad', alertCount: 11, dwlrCount: 37 },
-    { name: 'Pune', alertCount: 7, dwlrCount: 29 }
+    { name: 'Chennai', alertCount: 89, dwlrCount: 45 },
+    { name: 'Delhi', alertCount: 73, dwlrCount: 38 },
+    { name: 'Mumbai', alertCount: 65, dwlrCount: 52 },
+    { name: 'Kolkata', alertCount: 59, dwlrCount: 31 },
+    { name: 'Bangalore', alertCount: 43, dwlrCount: 43 },
+    { name: 'Hyderabad', alertCount: 76, dwlrCount: 37 },
+    { name: 'Pune', alertCount: 86, dwlrCount: 29 }
   ];
   
   const alertTypes = [

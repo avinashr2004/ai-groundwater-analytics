@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import emblem from '../assets/emblem.png'; // Make sure the file name is exactly 'emblem.png'
 
 const styles = {
   header: {
@@ -115,19 +116,13 @@ const Header = () => {
                             style={styles.siteLogo}
                             rel="home"
                         >
-                            <img
-                                src="https://jalshakti-dowr.gov.in/wp-content/themes/sdo-theme/images/emblem.svg"
-                                alt="State Emblem of India"
-                                style={styles.logoImage}
-                            />
+                            
                             <div style={styles.logoText}>
-                                <strong lang="hi" style={styles.hindiTitle}>
-                                    जलसंसाधन, नदी विकास और गंगा संरक्षण विभाग
-                                </strong>
+                                
                                 <h1 style={styles.englishTitle}>
                                     Department of Water Resources, River Development and Ganga Rejuvenation
                                 </h1>
-                                <p style={styles.subtitle}>सत्यमेव जयते</p>
+                                
                             </div>
                         </a>
                     </div>

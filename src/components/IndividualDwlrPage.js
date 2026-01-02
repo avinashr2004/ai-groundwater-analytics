@@ -9,15 +9,35 @@ const generateDummyData = () => {
   const alertTypes = [
     'water abnormality',    
     'Low battery level', 
-    'Abnormal data', 
-    'Core', 
-    'Elective'
+    'Abnormal data'
   ];
 
   const data = [];
-  for (let i = 0; i < 100; i++) {
+  // Ensure at least one low battery alarm exists for demo purposes
+  data.push({
+    id: 'AL0',
+    type: 'Low battery level',
+    timestamp: new Date().toISOString().replace("T", " ").substring(0, 19),
+    value: 15,
+    batteryLevel: 15
+  });
+
+  for (let i = 1; i < 100; i++) {
     const randomType = alertTypes[Math.floor(Math.random() * alertTypes.length)];
-    const randomValue = Math.floor(Math.random() * 50) + 1;
+    let randomValue = Math.floor(Math.random() * 50) + 1;
+    
+    // Weighted random for battery to simulate more low battery scenarios
+    let randomBatteryLevel;
+    
+    // If the random type IS 'Low battery level', force the battery to be low (< 20)
+    if (randomType === 'Low battery level') {
+        randomBatteryLevel = Math.floor(Math.random() * 20); // 0 to 19
+        randomValue = randomBatteryLevel; // Sync value for display consistency
+    } else {
+        // Otherwise, battery is normal (20-100%)
+        randomBatteryLevel = Math.floor(Math.random() * 81) + 20; // 20 to 100
+    }
+
     const timestamp = new Date();
     timestamp.setMinutes(timestamp.getMinutes() - i * 10);
 
@@ -26,6 +46,7 @@ const generateDummyData = () => {
       type: randomType,
       timestamp: timestamp.toISOString().replace("T", " ").substring(0, 19),
       value: randomValue,
+      batteryLevel: randomBatteryLevel 
     });
   }
   return data;
@@ -180,14 +201,25 @@ const AlarmItem = styled.li`
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.2s;
+  background-color: ${props => props.isLowBattery ? '#ffebee' : 'transparent'}; /* Highlight low battery items */
 
   &:hover {
-    background-color: #f6f8fa;
+    background-color: ${props => props.isLowBattery ? '#ffcdd2' : '#f6f8fa'};
   }
 
   &:last-child {
     border-bottom: none;
   }
+`;
+
+const BatteryIndicator = styled.span`
+  font-size: 0.8rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background-color: ${props => props.level < 20 ? '#dc3545' : '#28a745'};
+  color: white;
+  font-weight: bold;
+  margin-left: 1rem;
 `;
 
 // Add after other styled components
@@ -265,6 +297,21 @@ const StatCard = styled.div`
   }
 `;
 
+const BatteryStatus = styled.span`
+  color: ${props => props.isLow ? '#dc3545' : '#28a745'};
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &::after {
+    content: '${props => props.isLow ? '⚠️ Low Battery!' : ''}';
+    font-size: 0.8rem;
+    color: #dc3545;
+  }
+`;
+
 function IndividualDwlrPage() {
   const { city, dwlrId } = useParams();
   const [selectedType, setSelectedType] = useState('water abnormality');
@@ -299,14 +346,11 @@ const generateHourlyData = () => {
       hour: hour,
       waterLevel: (baseValue + variation).toFixed(2),
       temperature: (20 + Math.random() * 5).toFixed(1),
-      conductivity: (Math.random() * 100 + 400).toFixed(0)
+      conductivity: (Math.random() * 100 + 400).toFixed(0),
+      batteryLevel: Math.floor(Math.random() * 100) // Initial dummy battery level
     };
   });
 };
-
-// Inside the IndividualDwlrPage component, add this state
-// Add this line near the other useState declarations
-// const [hourlyData] = useState(generateHourlyData());
 
   const chartData = {
     labels: filteredAlarms.map(alarm => alarm.timestamp),
@@ -363,6 +407,9 @@ const generateHourlyData = () => {
 const generateTimeData = (days) => {
   const data = [];
   const baseValue = 25 + Math.random() * 5;
+  // Change: Starting battery level needs to be lower to reflect a "Low Battery" scenario in the recent data
+  const currentBattery = 18.0; // Start at 18% (Low Battery) for recent data
+  const depletionRatePerHour = 0.05; // Battery depletes by 0.05% every hour
   
   for (let d = 0; d < days; d++) {
     for (let h = 0; h < 24; h++) {
@@ -374,13 +421,30 @@ const generateTimeData = (days) => {
       const timeBasedVariation = Math.sin(h / 24 * Math.PI) * 0.3;
       const randomVariation = (Math.random() - 0.5) * 0.2;
       
+      // Calculate battery level: Start at current low level and ADD charge as we go back in time
+      // This simulates that battery was higher in the past and depleted to current level
+      // Total hours ago = (d * 24) + (23 - h) ... roughly counting backwards from "now"
+      // But we are generating loops. Let's simplifiy: 
+      // If d=0 (today), battery should be around currentBattery.
+      // If d=30 (a month ago), battery should be higher.
+      const totalHoursAgo = (d * 24) + (23 - h);
+      let calculatedBattery = currentBattery + (totalHoursAgo * depletionRatePerHour);
+      
+      // Cap at 100% and ensure it doesn't go below 0 purely by calculation (though in real life it dies)
+      if (calculatedBattery > 100) calculatedBattery = 100;
+      if (calculatedBattery < 0) calculatedBattery = 0;
+
+      // Add a tiny bit of random noise to battery reading (e.g., ±0.1V fluctuation)
+      calculatedBattery += (Math.random() - 0.5) * 0.1;
+
       data.push({
         timestamp: date,
         hour: h,
         day: date.getDate(),
         waterLevel: (baseValue + timeBasedVariation + randomVariation).toFixed(2),
         temperature: (20 + Math.sin(h / 24 * Math.PI) * 2 + Math.random()).toFixed(1),
-        conductivity: (450 + Math.sin(h / 24 * Math.PI) * 50 + Math.random() * 20).toFixed(0)
+        conductivity: (450 + Math.sin(h / 24 * Math.PI) * 50 + Math.random() * 20).toFixed(0),
+        batteryLevel: calculatedBattery.toFixed(1) // Realistic depleting battery
       });
     }
   }
@@ -453,9 +517,15 @@ const [hourlyData] = useState(generateHourlyData());
             </Select>
             <AlarmList>
               {filteredAlarms.map((alarm, index) => (
-                <AlarmItem key={index}>
+                <AlarmItem key={index} isLowBattery={alarm.batteryLevel < 20}>
                   <span>ID: {alarm.id}</span>
                   <span>{alarm.timestamp}</span>
+                  {/* Display battery level if available and low */}
+                  {alarm.batteryLevel !== undefined && (
+                    <BatteryIndicator level={alarm.batteryLevel}>
+                      {alarm.batteryLevel}%
+                    </BatteryIndicator>
+                  )}
                 </AlarmItem>
               ))}
             </AlarmList>
@@ -502,7 +572,6 @@ const [hourlyData] = useState(generateHourlyData());
         </Card>
       </Grid>
       
-      // Replace the existing HourlyDataSection JSX
 <HourlyDataSection>
   <h3>Historical Readings</h3>
   <TimeFilterContainer>
@@ -533,6 +602,7 @@ const [hourlyData] = useState(generateHourlyData());
         <th>Water Level (m)</th>
         <th>Temperature (°C)</th>
         <th>Conductivity (µS/cm)</th>
+        <th>Battery Level (%)</th> {/* Added new column header */}
       </tr>
     </thead>
     <tbody>
@@ -543,6 +613,12 @@ const [hourlyData] = useState(generateHourlyData());
           <td>{reading.waterLevel}</td>
           <td>{reading.temperature}</td>
           <td>{reading.conductivity}</td>
+          <td>
+            {/* Added Battery Level Cell with Warning Logic */}
+            <BatteryStatus isLow={reading.batteryLevel < 20}>
+              {reading.batteryLevel}%
+            </BatteryStatus>
+          </td>
         </tr>
       ))}
     </tbody>
